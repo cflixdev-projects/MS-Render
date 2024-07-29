@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>WebFlix</title>
+</head>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: rgb(21, 21, 21);
+}
+
+#switch {
+border: none;
+background-color: white;
+font-family: "Poppins";
+cursor: pointer;
+width: fit-content;
+padding: 5px 10px;
+margin-bottom: 15px;
+border-radius: 10px;
+transition: all 0.6s;
+margin-left: 10px;
+}
+
+#switch:focus {
+        outline: none;
+}
+
+#switch:hover {
+transition: all 0.6s;
+transform: scale(1.1);
+  }
+
+.outerWrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins";
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  padding: 50px 40px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.wrapper h1 {
+  background: linear-gradient(
+    to right,
+    #00f2ff,
+    #a200ff
+  ); /* Set the linear gradient */
+  -webkit-background-clip: text; /* Clip text to the background */
+  color: transparent;
+  font-size: 2.7rem;
+}
+
+#videoFrame {
+  border: 5px solid transparent; /* Set initial border to transparent */
+  outline: none; /* Remove the outline */
+  border-image: linear-gradient(
+    to right,
+    #00f2ff,
+    #a200ff
+  ); /* Set the linear gradient as border image */
+  border-image-slice: 1; /* Ensure the border image covers the entire border */
+
+}
+
+#textInput:focus-visible {
+  outline: none;
+}
+
+
+svg {
+  height: 20px;
+  width: 15px;
+}
+
+.btn:hover {
+  box-shadow: 0px 0px 20px rgb(144, 0, 255);
+  background: white;
+}
+
+#textInput:hover, #textInput:focus{
+  box-shadow: 0px 0px 15px rgb(0, 217, 255);
+}
+
+
+
+
+/* #textInput {
+  border: none;
+  padding: 8px 15px;
+  border-radius: 15px;
+  transition: 0.3s all;
+  background: rgb(232, 232, 232);
+} */
+
+ .wrapperSecond {
+    width: 300px;
+    max-width: 100%;
+    position: relative;
+    display: flex;
+    margin-bottom: 15px;
+}
+
+input::placeholder {
+    font-weight: 500;
+    font-family: 'Poppins';
+}
+
+input {
+    font-family: 'Poppins';
+    font-weight: bold;
+    background: linear-gradient(
+        to right,
+        #00f2ff,
+        #a200ff
+    ); /* Set the linear gradient */
+    -webkit-background-clip: text; /* Clip text to the background */
+    color: transparent;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    width: 100%;
+    transition: 0.3s all;
+    caret-color: rgb(23, 228, 255);
+    transition: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #09d6e0; /* Ensure text remains transparent */
+
+}
+
+.wrapperSecond button {
+    background-color: white;
+    border-radius: 50%;
+    height: 100%;
+    aspect-ratio: 1;
+    position: absolute;
+    right: 0px;
+    border: none;
+    border: 1px solid rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+/* Media queries */
+
+@media screen and (min-width: 900px)
+{
+    iframe {
+        width: 900px;
+        height: 450px;
+    }
+}
+
+
+@media screen and (max-width: 970px) {
+    #videoFrame {
+      height: 350px;
+      width: 650px;
+    }
+    .wrapper h1 {
+        font-size: 2.4rem;
+    }
+  }
+
+  @media screen and (max-width: 770px) {
+    #videoFrame {
+      height: 200px;
+      width: 350px;
+    }
+    .info-txt a{
+        font-size: 0.6rem;
+    }
+    .info-txt a:nth-child(1) {
+        display: none;
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    #videoFrame {
+      height: 250px;
+      width: 300px;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    #videoFrame {
+      height: 150px;
+      width: 300px;
+    }
+    .wrapper {
+        padding: 10px 20px;
+    }
+    .wrapper h1 {
+        font-size: 2rem;
+    }
+  }
+
+  @media screen and (max-width: 365px) {
+    #videoFrame {
+      height: 200px;
+      width: 290px;
+    }
+    .wrapper {
+        padding: 20px 5px;
+    }
+    .wrapperSecond {
+        width: 230px;
+    }
+  }
+
+#searchForm {
+display: flex;
+}
+  .info-txt {
+    font-size:0.8rem;
+  text-align:center
+    }
+  .info-txt a{
+  text-decoration: none;
+  color: white;
+  font-family: 'Poppins';
+  }
+</style>
+<body>
+    <div class="outerWrapper">
+        <div class="wrapper">
+            <h1 class="title">Webflix</h1>
+            <form id="searchForm" onsubmit="return search()">
+                <div class="wrapperSecond">
+                <input id="textInput" name="textInput" placeholder="Name, Season, Episode">
+                <button class="btn" type="submit">
+                    <svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 296.999 296.999" xml:space="preserve">
+
+               <g>
+                   <g>
+                       <g>
+                           <path d="M156.215,53.603c-13.704-13.704-31.924-21.251-51.302-21.251c-19.38,0-37.6,7.548-51.302,21.251
+                               c-3.855,3.855-3.855,10.105,0,13.96c3.856,3.854,10.104,3.854,13.96,0c9.974-9.975,23.236-15.469,37.342-15.469
+                               c14.106,0,27.368,5.494,37.342,15.469c20.59,20.59,20.59,54.094,0,74.685c-3.855,3.855-3.855,10.105,0,13.96
+                               c1.928,1.927,4.454,2.891,6.98,2.891s5.052-0.964,6.98-2.891C184.503,127.92,184.503,81.891,156.215,53.603z"/>
+                           <path d="M289.054,250.651l-93.288-93.288c23.145-40.108,17.591-92.372-16.674-126.637C159.278,10.912,132.933,0,104.913,0
+                               c-28.022,0-54.365,10.912-74.18,30.727C10.918,50.542,0.007,76.884,0.007,104.906c0,28.021,10.912,54.365,30.727,74.179
+                               c20.452,20.451,47.315,30.676,74.179,30.676c18.145,0,36.287-4.672,52.456-14.003l93.289,93.287
+                               c5.127,5.129,11.946,7.954,19.197,7.954c7.253,0,14.071-2.824,19.198-7.953C299.639,278.461,299.639,261.238,289.054,250.651z
+                                M104.913,190.029c-21.806-0.003-43.619-8.303-60.219-24.904c-16.086-16.085-24.945-37.471-24.945-60.219
+                               s8.859-44.134,24.945-60.219c16.085-16.086,37.471-24.945,60.219-24.945c22.748,0,44.133,8.859,60.219,24.945
+                               c33.205,33.205,33.205,87.233,0,120.438C148.528,181.729,126.724,190.031,104.913,190.029z M275.094,275.088
+                               c-1.4,1.399-3.259,2.17-5.238,2.17c-1.978,0-3.838-0.771-5.237-2.171l-90.952-90.951c1.852-1.61,3.664-3.289,5.426-5.051
+                               c1.761-1.761,3.441-3.573,5.05-5.425l90.951,90.951C277.982,267.5,277.982,272.199,275.094,275.088z"/>
+                       </g>
+                   </g>
+               </g>
+               </svg>
+
+                </button>
+
+            </div>
+
+
+
+                <button id="switch" onclick="switchMS()">Shows</button>
+            </form>
+
+            <div id="videoContainer">
+                <iframe id="videoFrame" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="info-txt">
+                <a href="https://consoleflix.netlify.app/">Experience faster streaming with ConsoleFlix, our native terminal app.</a>
+                <br>
+                    <a href="https://consoleflix.netlify.app/">👉 Visit ConsoleFlix 👈</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+          var switchValue = 'Shows';
+
+        function switchMS() {
+            var btnSwitch = document.getElementById('switch');
+            if (btnSwitch.innerHTML === "Shows") {
+                btnSwitch.innerHTML = "Movies";
+                switchValue = 'Movies';
+            } else {
+                btnSwitch.innerHTML = "Shows";
+                switchValue = 'Shows';
+            }
+        }
+
+        function updateIframeSrc(newLink) {
+            var videoFrame = document.getElementById('videoFrame');
+            if (newLink.trim() !== "") {
+                videoFrame.src = newLink;
+                document.getElementById('videoContainer').style.display = 'block';
+                videoFrame.style.display = 'block'; // Show the video frame
+            } else {
+                videoFrame.src = "";
+                document.getElementById('videoContainer').style.display = 'none';
+                videoFrame.style.display = 'none'; // Hide the video frame
+            }
+        }
+
+        function search() {
+            var textInput = document.getElementById('textInput').value.trim();
+            var formData = new FormData();
+            formData.append('textInput', textInput);
+            formData.append('switchValue', switchValue);
+
+            fetch('/search', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                try {
+                    const jsonResponse = JSON.parse(data);
+                    console.error('Error:', jsonResponse);
+                } catch {
+                    updateIframeSrc(data);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+
+            return false; // Prevent default form submission
+        }
+
+
+    </script>
+</body>
+</html>
