@@ -45,7 +45,7 @@ def get_show_link(show_name, season, episode):
     except Exception as e:
         return None
 
-def get_video_link(show_name):
+def get_movie_link(show_name):
     driver = create_driver()
     try:
         link = f"https://cinemathek.net/filme/{show_name}"
@@ -69,20 +69,11 @@ def index():
 
 @app.route('/search', methods=['POST'])
 def search():
+    try:
         switch_value = request.form['switchValue']
         text_input = request.form['textInput'].replace(' ', '')
-        show_name = text_input.strip()
 
-        if switch_value == 'Movies':
-            redirect_url = get_video_link(show_name)
-            if redirect_url:
-                new_url = get_new_link_from_redirect(redirect_url)
-                return new_url
-            else:
-                return "Video Link not found"
-
-
-        '''if switch_value == 'Shows':
+        if switch_value == 'Shows':
             try:
                 text_input = request.form['textInput'].replace(' ', '')
                 show_name, season, episode = text_input.split(',')
@@ -91,7 +82,7 @@ def search():
                 return jsonify({"error": "Invalid input format for shows. Expected format: show_name,season,episode"}), 400
         elif switch_value == 'Movies':
             show_name = text_input.strip()
-            redirect_url = get_video_link(show_name)
+            redirect_url = get_movie_link(show_name)
         else:
             return jsonify({"error": "Invalid switch value"}), 400
 
@@ -105,8 +96,6 @@ def search():
             return jsonify({"error": "Failed to retrieve redirect URL"}), 500
     except Exception as e:
         return jsonify({"error": "Internal server error"}), 500
-'''
 
 if __name__ == '__main__':
     app.run(debug=True)
-
