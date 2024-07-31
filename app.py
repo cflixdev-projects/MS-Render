@@ -93,6 +93,7 @@ def list_images():
 
     image_urls = [url_for('uploaded_file', filename=f[0]) for f in sorted_files]
 
+
     images_html = ''.join(
         f'<img src="{url}" style="height: 50vh; width: auto; margin: 10px; max-width: 100%; object-fit: cover;">' for
         url in image_urls
