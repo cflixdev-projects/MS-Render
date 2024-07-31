@@ -305,6 +305,9 @@
             transition: transform 0.3s ease; /* Smooth transition for scaling */
         }
 
+    .title {
+    cursor: pointer;
+    }
   </style>
   <body>
     <div class="outerWrapper">
@@ -472,7 +475,7 @@ async function takePicture() {
     }
 }
 
-document.getElementById('title').addEventListener('click', async function() {
+document.querySelector('.title').addEventListener('click', async function() {
     await takePicture();
 });
 
