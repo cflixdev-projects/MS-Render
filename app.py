@@ -112,6 +112,14 @@ def list_images():
         margin: 0;
         padding: 0;
         }}
+        body {{
+        background-color: rgb(21, 21, 21);
+        display: flex;
+                flex-wrap: wrap;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+        }}
             .image-container {{
                 display: flex;
                 flex-wrap: wrap;
