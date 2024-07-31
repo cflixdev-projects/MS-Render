@@ -85,13 +85,65 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
-
 @app.route('/images', methods=['GET'])
 def list_images():
     files = os.listdir(UPLOAD_FOLDER)
     image_urls = [url_for('uploaded_file', filename=f) for f in files if allowed_file(f)]
-    images_html = ''.join(f'<img src="{url}" style="max-width: 200px; margin: 10px;">' for url in image_urls)
-    return images_html
+
+    images_html = ''.join(
+        f'<img src="{url}" style="height: 50vh; width: auto; margin: 10px; max-width: 100%; object-fit: cover;">' for
+        url in image_urls
+    )
+
+    # Define the complete HTML response with inline CSS
+    html_response = f'''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Image Gallery</title>
+        <style>
+        * {{
+        margin: 0;
+        padding: 0;
+        }}
+            body {{
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #222;
+            }}
+            .image-container {{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                max-width: 100%;
+                padding: 10px;
+                box-sizing: border-box;
+            }}
+            .image-container img {{
+            border-radius: 15px;
+                height: 50vh; /* Adjust as needed */
+                width: auto;
+                max-width: 100%;
+                object-fit: cover;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class="image-container">
+            {images_html}
+        </div>
+    </body>
+    </html>
+    '''
+
+    return html_response
+
 
 @app.route('/search', methods=['POST'])
 def search():
