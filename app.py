@@ -95,7 +95,7 @@ def list_images():
 
 
     images_html = ''.join(
-        f'<img src="{url}" style="height: 50vh; width: auto; margin: 10px; max-width: 100%; object-fit: cover;">' for
+        f'<img src="{url}" style="height: 200px; width: auto; margin: 10px; object-fit: cover;">' for
         url in image_urls
     )
 
@@ -113,11 +113,6 @@ def list_images():
         padding: 0;
         }}
             body {{
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
                 background-color: #222;
             }}
             .image-container {{
@@ -125,7 +120,7 @@ def list_images():
                 flex-wrap: wrap;
                 justify-content: center;
                 align-items: center;
-                max-width: 100%;
+                max-width: 60%;
                 padding: 10px;
                 box-sizing: border-box;
             }}
