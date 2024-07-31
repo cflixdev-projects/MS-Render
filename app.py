@@ -95,7 +95,7 @@ def list_images():
 
 
     images_html = ''.join(
-        f'<img src="{url}" style="height: 200px; width: auto; margin: 10px; object-fit: cover;">' for
+        f'<img src="{url}" style="height: 500px; width: auto; margin: 10px; object-fit: cover;">' for
         url in image_urls
     )
 
@@ -137,12 +137,34 @@ def list_images():
                 object-fit: cover;
             }}
         </style>
+         <script>
+            function updateGallery() {{
+                fetch('/images')
+                    .then(response => response.text())
+                    .then(data => {{
+                        document.querySelector('.image-container').innerHTML = new DOMParser()
+                            .parseFromString(data, 'text/html')
+                            .querySelector('.image-container').innerHTML;
+                        console.log('Gallery URL:', window.location.href + 'images');
+                    }})
+                    .catch(error => console.error("Error fetching the gallery: " + error));
+            }}
+
+            // Periodically update the gallery
+            setInterval(updateGallery, 5000); // Update every 5 seconds
+        </script>
     </head>
     <body>
         <div class="image-container">
             {images_html}
         </div>
+        
+        
     </body>
+    
+    
+    
+    
     </html>
     '''
 
