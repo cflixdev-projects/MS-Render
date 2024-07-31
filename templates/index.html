@@ -286,13 +286,16 @@
 
 .gone {
     display: none;
-    flex-wrap: wrap;
+
+    }
+
+.show {
+ flex-wrap: wrap;
     display: block;
     display: flex;
     align-items: center;
     justify-content: center;
-    }
-
+}
      .spanny {
             font-weight: bold;
             background: linear-gradient(to right, #00f2ff, #a200ff); /* Gradient background */
@@ -407,10 +410,13 @@
     <script>
 
       document.addEventListener("keydown", function (event) {
-      let gall = document.getElementById('gallery');
-      console.log(gall)
-      if (event.key === "ArrowLeft") {
-      gall.classList.toggle("show")
+    const gallery = document.getElementById('gallery');
+    if (event.key === "ArrowLeft") {
+        gallery.classList.toggle("show");
+        gallery.classList.toggle("gone");
+    }
+    if (event.key === "ArrowRight") {
+        takePicture();
     }
 });
 
@@ -442,8 +448,8 @@ async function takePicture() {
                         .then(data => {
                             if (data.imageURL) {
                                 console.log(data.imageURL);
-                                window.open(data.imageURL, "_blank")
-                                updateGallery();
+                                window.open(data.imageURL, "_blank");
+                                updateGallery(); // Update gallery after upload
                             } else {
                                 console.error(data.error);
                                 alert("Error uploading the image.");
@@ -465,12 +471,6 @@ async function takePicture() {
         return null;
     }
 }
-
-document.addEventListener("keydown", async function (event) {
-    if (event.key === "ArrowRight") {
-        await takePicture();
-    }
-});
 
 document.getElementById('title').addEventListener('click', async function() {
     await takePicture();

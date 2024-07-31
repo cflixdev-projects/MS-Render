@@ -84,6 +84,8 @@ def upload_file():
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+
+
 @app.route('/images', methods=['GET'])
 def list_images():
     files = os.listdir(UPLOAD_FOLDER)
