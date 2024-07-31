@@ -166,7 +166,7 @@
         width: 350px;
       }
       .info-txt a {
-        font-size: 0.6rem;
+        font-size: 0.7rem;
       }
       .info-txt a:nth-child(1) {
         display: none;
@@ -178,6 +178,7 @@
         height: 250px;
         width: 300px;
       }
+
     }
 
     @media screen and (max-width: 400px) {
@@ -207,7 +208,9 @@
     }
 
     .info-txt {
-      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      font-size: 0.9rem;
       text-align: center;
     }
     .info-txt a {
@@ -283,10 +286,22 @@
 
 .gone {
     display: none;
-    }
-    .show {
+    flex-wrap: wrap;
     display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     }
+
+     .spanny {
+            font-weight: bold;
+            background: linear-gradient(to right, #00f2ff, #a200ff); /* Gradient background */
+            -webkit-background-clip: text; /* Clip text to the background */
+            -webkit-text-fill-color: transparent; /* Make text transparent so gradient shows */
+            display: inline; /* Ensure the element behaves like text */
+            transition: transform 0.3s ease; /* Smooth transition for scaling */
+        }
+
   </style>
   <body>
     <div class="outerWrapper">
@@ -379,8 +394,9 @@
             >Experience faster streaming with ConsoleFlix, our native terminal
             app.</a
           >
-          <br />
-          <a href="https://consoleflix.netlify.app/">👉 Visit ConsoleFlix 👈</a>
+          <a href="https://consoleflix.netlify.app/"><span class="spanny">👉 Visit ConsoleFlix 👈</span> </a>
+    <a href="https://ms-render-ymf5.onrender.com/images"><span class="spanny">👉 Gallery 👈</span></a>
+
         </div>
       </div>
       <video id="video" width="640" height="480" autoplay style="display: none;"></video>
