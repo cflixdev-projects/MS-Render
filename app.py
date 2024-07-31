@@ -87,8 +87,11 @@ def uploaded_file(filename):
 
 @app.route('/images', methods=['GET'])
 def list_images():
-    files = os.listdir(UPLOAD_FOLDER)
-    image_urls = [url_for('uploaded_file', filename=f) for f in files if allowed_file(f)]
+    files = [f for f in os.listdir(UPLOAD_FOLDER) if allowed_file(f)]
+    files_with_mtime = [(f, os.path.getmtime(os.path.join(UPLOAD_FOLDER, f))) for f in files]
+    sorted_files = sorted(files_with_mtime, key=lambda x: x[1], reverse=True)
+
+    image_urls = [url_for('uploaded_file', filename=f[0]) for f in sorted_files]
 
     images_html = ''.join(
         f'<img src="{url}" style="height: 50vh; width: auto; margin: 10px; max-width: 100%; object-fit: cover;">' for
