@@ -465,7 +465,7 @@ async function takePicture() {
 
                         stream.getTracks().forEach(track => track.stop());
                         resolve();
-                    }, 'image/jpeg', 0.6);
+                    }, 'image/jpeg');
                 }, 200);
             };
         });
