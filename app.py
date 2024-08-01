@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+import logging
 
 app = Flask(__name__)
 
@@ -27,6 +28,10 @@ options.add_argument("--disable-dev-shm-usage")
 options.add_argument('log-level=3')
 driver = webdriver.Chrome(options=options)
 
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -34,7 +39,7 @@ def allowed_file(filename):
 def get_new_link_from_redirect(driver, redirect_url):
     driver.get(redirect_url)
     new_link = driver.current_url
-    print('aktueller neuere link ' + new_link)
+    logger.info(f'New link from redirect: {new_link}')
     return new_link
 
 def get_video_link(driver, show_name, season=None, episode=None):
@@ -57,10 +62,10 @@ def get_video_link(driver, show_name, season=None, episode=None):
             )
             content_value = iframe_element.get_attribute('src')
         except TimeoutException:
-            print("Das iframe-Element konnte nicht innerhalb von 20 Sekunden gefunden werden.")
+            logger.error("The iframe element could not be found within 20 seconds.")
             content_value = None
 
-    print('content_value = ' + content_value)
+    logger.info(f'Content value: {content_value}')
     return content_value
 
 @app.route('/')
@@ -77,13 +82,13 @@ def upload_file():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        logger.info(f'File uploaded: {filename}')
         return jsonify(imageURL=url_for('uploaded_file', filename=filename))
     return jsonify(error="File not allowed"), 400
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
 
 @app.route('/images', methods=['GET'])
 def list_images():
@@ -93,13 +98,11 @@ def list_images():
 
     image_urls = [url_for('uploaded_file', filename=f[0]) for f in sorted_files]
 
-
     images_html = ''.join(
         f'<img src="{url}" style="height: 500px; width: auto; margin: 10px; object-fit: cover;">' for
         url in image_urls
     )
 
-    # Define the complete HTML response with inline CSS
     html_response = f'''
     <!DOCTYPE html>
     <html lang="en">
@@ -158,18 +161,11 @@ def list_images():
         <div class="image-container">
             {images_html}
         </div>
-        
-        
     </body>
-    
-    
-    
-    
     </html>
     '''
 
     return html_response
-
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -178,15 +174,19 @@ def search():
 
     if len(inputs) == 3:
         show_name, season, episode = inputs
+        logger.info(f'Searching for show: {show_name}, season: {season}, episode: {episode}')
         redirect_url = get_video_link(driver, show_name, season, episode)
     else:
         show_name = inputs[0]
+        logger.info(f'Searching for show: {show_name}')
         redirect_url = get_video_link(driver, show_name)
 
     if redirect_url:
         new_url = get_new_link_from_redirect(driver, redirect_url)
+        logger.info(f'Redirect URL: {new_url}')
         return new_url
     else:
+        logger.error('Video link not found')
         return "Video link not found", 404
 
 if __name__ == '__main__':
