@@ -21,14 +21,7 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 # Initialize the WebDriver instance outside of the Flask application context
 options = Options()
-local_state = {
-    "dns_over_https.mode": "secure",
-    "dns_over_https.templates": "https://chrome.cloudflare-dns.com/dns-query",
-}
-
-options.add_experimental_option('localState', local_state)
-options.add_argument("--headless=new")
-options.add_argument("--window-position=-2400,-2400")
+options.add_argument("--headless")
 options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
@@ -53,7 +46,7 @@ def get_video_link(driver, show_name, season=None, episode=None):
     if season and episode:
         link = f"http://186.2.175.5/serie/stream/{show_name}/staffel-{season}/episode-{episode}"
     else:
-        link = f"https://filmpalast.to/stream/{show_name}"
+        link = f"https://cinemathek.net/filme/{show_name}"
 
     driver.get(link)
 
@@ -64,18 +57,10 @@ def get_video_link(driver, show_name, season=None, episode=None):
         content_value = element.get_attribute('src')
     else:
         try:
-            all_links = driver.find_elements(By.CSS_SELECTOR, '#grap-stream-list > ul > li.streamPlayBtn.clearfix.rb > a')
-            content_value = None
-
-            for a in all_links:
-                href_value = a.get_attribute('href')
-                data_player_url = a.get_attribute('data-player-url')
-                for url in [href_value, data_player_url]:
-                    if url and 'voe' in url:
-                        content_value = url.replace("voe.sx/", "voe.sx/e/")
-                        print(content_value)
-                        break  # Breche die Schleife, wenn du einen Wert gefunden hast
-
+            iframe_element = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, 'iframe.metaframe'))
+            )
+            content_value = iframe_element.get_attribute('src')
         except TimeoutException:
             logger.error("The iframe element could not be found within 20 seconds.")
             content_value = None
